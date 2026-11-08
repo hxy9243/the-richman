@@ -94,3 +94,15 @@ lifelib/modelx for insurance reference-model reuse. See [architecture](docs/arch
 and [validation](docs/validation.md). Owl and PolicyEngine remain evaluation
 candidates, not claimed integrations. Next work should implement the actual
 carrier-input adapter and California tax adapter before building a UI.
+
+## Household lifecycle API (new)
+
+`wealthsim.api.simulate_scenario` now composes routine wages/spending, traditional
+and Roth 401k deposits, employer match, historical or stochastic return paths,
+policy cash flows, major life expenses, and amortizing plan loans into one monthly
+household ledger and annual tax/equity summaries. See [API and limitations](docs/lifecycle.md)
+and runnable [synthetic household scenario](examples/household.json).
+
+This newer household API settles modeled annual income taxes from checking (and
+retains unpaid tax liability), unlike the standalone legacy strategies described
+above. It still is not a complete current-law California or insurance model.

@@ -1,0 +1,20 @@
+{
+  "market": {"mode":"stochastic", "assets":{"SPY":{"annual_drift":0.06,"annual_volatility":0.18,"annual_dividend_yield":0.015}}, "months":24,"start":"2026-01","seed":42},
+  "initial_cash":20000,
+  "accounts":{"brokerage":"taxable","traditional401k":"traditional","roth401k":"roth"},
+  "salaries":[{"start":"2026-01","end":"2027-12","monthly_gross":12000,"traditional_account":"traditional401k","traditional_rate":0.08,"roth_account":"roth401k","roth_rate":0.04,"annual_employee_limit":20000,"monthly_payroll_tax":900,"employer_match_rate":1,"employer_match_max_salary_rate":0.04,"employer_account":"traditional401k"}],
+  "spending":[{"start":"2026-01","end":"2027-12","monthly_amount":3000,"annual_inflation":0.025,"coefficient_of_variation":0.1,"seed":10}],
+  "policies":{"iul":{"config":{"kind":"iul"},"symbol":"SPY"},"vul":{"config":{"kind":"vul"},"symbol":"SPY"}},
+  "events":[
+    {"start":"2026-01","end":"2027-12","type":"buy","account":"traditional401k","symbol":"SPY","amount":900},
+    {"start":"2026-01","end":"2027-12","type":"buy","account":"roth401k","symbol":"SPY","amount":400},
+    {"start":"2026-01","end":"2027-12","type":"buy","account":"brokerage","symbol":"SPY","amount":500,"from_checking":true},
+    {"start":"2026-01","end":"2027-12","type":"premium","policy":"iul","amount":200},
+    {"start":"2026-01","end":"2027-12","type":"premium","policy":"vul","amount":200},
+    {"month":"2026-06","type":"deposit","amount":10000},
+    {"month":"2026-07","type":"spend","amount":8000},
+    {"month":"2027-06","type":"policy_loan","policy":"iul","amount":1000},
+    {"month":"2027-06","type":"spend","amount":1000}
+  ],
+  "annual_inflation":0.025
+}

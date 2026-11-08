@@ -16,6 +16,13 @@ def main():
     parser.add_argument('--tax-year',type=int,default=2026,help='Fixed tax-law year across replay, not market year')
     args=parser.parse_args()
     data=json.loads(args.scenario.read_text())
+    if 'market' in data:
+        from .api import simulate_scenario
+        if args.tax == 'taxcalc':
+            data['tax'] = {'engine':'taxcalc', 'tax_year':args.tax_year}
+        simulate_scenario(data).export(args.output)
+        print(f'Household results saved to {args.output.resolve()}')
+        return
     market=pd.read_csv(args.scenario.parent/data['market_csv'])
     tax=SyntheticTaxEngine()
     if args.tax == 'taxcalc':
