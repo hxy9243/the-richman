@@ -1,0 +1,792 @@
+{
+  "accounts": {
+    "brokerage": "taxable"
+  },
+  "market_csv": "synthetic_market.csv",
+  "tax_profile": {
+    "baseline_ordinary_income": 250000
+  },
+  "events": [
+    {
+      "month": "2026-01",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-01",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-02",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-02",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-03",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-03",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-04",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-04",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-05",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-05",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-06",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-06",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-07",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-07",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-08",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-08",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-09",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-09",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-10",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-10",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-11",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-11",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2026-12",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2026-12",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-01",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-01",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-02",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-02",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-03",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-03",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-04",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-04",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-05",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-05",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-06",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-06",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-07",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-07",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-08",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-08",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-09",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-09",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-10",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-10",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-11",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-11",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2027-12",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2027-12",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-01",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-01",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-02",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-02",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-03",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-03",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-04",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-04",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-05",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-05",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-06",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-06",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-07",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-07",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-08",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-08",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-09",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-09",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-10",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-10",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-11",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-11",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-12",
+      "account": "brokerage",
+      "type": "deposit",
+      "amount": 1000
+    },
+    {
+      "month": "2028-12",
+      "account": "brokerage",
+      "type": "buy",
+      "symbol": "SPY",
+      "amount": 800
+    },
+    {
+      "month": "2028-12",
+      "account": "brokerage",
+      "type": "sell",
+      "symbol": "SPY",
+      "units": 10
+    }
+  ],
+  "policies": {
+    "iul": {
+      "symbol": "SPY",
+      "config": {
+        "kind": "iul"
+      },
+      "events": [
+        {
+          "month": "2026-01",
+          "premium": 1000
+        },
+        {
+          "month": "2026-02",
+          "premium": 1000
+        },
+        {
+          "month": "2026-03",
+          "premium": 1000
+        },
+        {
+          "month": "2026-04",
+          "premium": 1000
+        },
+        {
+          "month": "2026-05",
+          "premium": 1000
+        },
+        {
+          "month": "2026-06",
+          "premium": 1000
+        },
+        {
+          "month": "2026-07",
+          "premium": 1000
+        },
+        {
+          "month": "2026-08",
+          "premium": 1000
+        },
+        {
+          "month": "2026-09",
+          "premium": 1000
+        },
+        {
+          "month": "2026-10",
+          "premium": 1000
+        },
+        {
+          "month": "2026-11",
+          "premium": 1000
+        },
+        {
+          "month": "2026-12",
+          "premium": 1000
+        },
+        {
+          "month": "2027-01",
+          "premium": 1000
+        },
+        {
+          "month": "2027-02",
+          "premium": 1000
+        },
+        {
+          "month": "2027-03",
+          "premium": 1000
+        },
+        {
+          "month": "2027-04",
+          "premium": 1000
+        },
+        {
+          "month": "2027-05",
+          "premium": 1000
+        },
+        {
+          "month": "2027-06",
+          "premium": 1000
+        },
+        {
+          "month": "2027-07",
+          "premium": 1000
+        },
+        {
+          "month": "2027-08",
+          "premium": 1000
+        },
+        {
+          "month": "2027-09",
+          "premium": 1000
+        },
+        {
+          "month": "2027-10",
+          "premium": 1000
+        },
+        {
+          "month": "2027-11",
+          "premium": 1000
+        },
+        {
+          "month": "2027-12",
+          "premium": 1000
+        },
+        {
+          "month": "2028-01",
+          "premium": 1000
+        },
+        {
+          "month": "2028-02",
+          "premium": 1000
+        },
+        {
+          "month": "2028-03",
+          "premium": 1000
+        },
+        {
+          "month": "2028-04",
+          "premium": 1000
+        },
+        {
+          "month": "2028-05",
+          "premium": 1000
+        },
+        {
+          "month": "2028-06",
+          "premium": 1000
+        },
+        {
+          "month": "2028-07",
+          "premium": 1000
+        },
+        {
+          "month": "2028-08",
+          "premium": 1000
+        },
+        {
+          "month": "2028-09",
+          "premium": 1000
+        },
+        {
+          "month": "2028-10",
+          "premium": 1000
+        },
+        {
+          "month": "2028-11",
+          "premium": 1000
+        },
+        {
+          "month": "2028-12",
+          "premium": 1000
+        }
+      ]
+    },
+    "vul": {
+      "symbol": "SPY",
+      "config": {
+        "kind": "vul"
+      },
+      "events": [
+        {
+          "month": "2026-01",
+          "premium": 1000
+        },
+        {
+          "month": "2026-02",
+          "premium": 1000
+        },
+        {
+          "month": "2026-03",
+          "premium": 1000
+        },
+        {
+          "month": "2026-04",
+          "premium": 1000
+        },
+        {
+          "month": "2026-05",
+          "premium": 1000
+        },
+        {
+          "month": "2026-06",
+          "premium": 1000
+        },
+        {
+          "month": "2026-07",
+          "premium": 1000
+        },
+        {
+          "month": "2026-08",
+          "premium": 1000
+        },
+        {
+          "month": "2026-09",
+          "premium": 1000
+        },
+        {
+          "month": "2026-10",
+          "premium": 1000
+        },
+        {
+          "month": "2026-11",
+          "premium": 1000
+        },
+        {
+          "month": "2026-12",
+          "premium": 1000
+        },
+        {
+          "month": "2027-01",
+          "premium": 1000
+        },
+        {
+          "month": "2027-02",
+          "premium": 1000
+        },
+        {
+          "month": "2027-03",
+          "premium": 1000
+        },
+        {
+          "month": "2027-04",
+          "premium": 1000
+        },
+        {
+          "month": "2027-05",
+          "premium": 1000
+        },
+        {
+          "month": "2027-06",
+          "premium": 1000
+        },
+        {
+          "month": "2027-07",
+          "premium": 1000
+        },
+        {
+          "month": "2027-08",
+          "premium": 1000
+        },
+        {
+          "month": "2027-09",
+          "premium": 1000
+        },
+        {
+          "month": "2027-10",
+          "premium": 1000
+        },
+        {
+          "month": "2027-11",
+          "premium": 1000
+        },
+        {
+          "month": "2027-12",
+          "premium": 1000
+        },
+        {
+          "month": "2028-01",
+          "premium": 1000
+        },
+        {
+          "month": "2028-02",
+          "premium": 1000
+        },
+        {
+          "month": "2028-03",
+          "premium": 1000
+        },
+        {
+          "month": "2028-04",
+          "premium": 1000
+        },
+        {
+          "month": "2028-05",
+          "premium": 1000
+        },
+        {
+          "month": "2028-06",
+          "premium": 1000
+        },
+        {
+          "month": "2028-07",
+          "premium": 1000
+        },
+        {
+          "month": "2028-08",
+          "premium": 1000
+        },
+        {
+          "month": "2028-09",
+          "premium": 1000
+        },
+        {
+          "month": "2028-10",
+          "premium": 1000
+        },
+        {
+          "month": "2028-11",
+          "premium": 1000
+        },
+        {
+          "month": "2028-12",
+          "premium": 1000
+        }
+      ]
+    }
+  }
+}

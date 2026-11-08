@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wealth-sim-core"
+version = "0.1.0"
+description = "Auditable event-ledger investment and insurance scenario research"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0,<3", "pandas>=2.2,<4"]
+
+[project.optional-dependencies]
+federal-tax = ["taxcalc==6.8.5"]
+insurance = ["lifelib==0.17.2"]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+wealthsim = "wealthsim.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

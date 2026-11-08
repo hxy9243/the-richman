@@ -1,0 +1,16 @@
+et_xmlfile==2.0.0
+lifelib==0.17.2
+llvmlite==0.49.0
+modelx==0.33.0
+networkx==3.7
+numba==0.67.0
+numpy==2.5.4
+openpyxl==3.1.5
+pandas==3.1.1
+pytest==9.2.0
+python-dateutil==3.0.0
+pytz==2026.6
+scipy==1.17.0
+setuptools==84.2.1
+taxcalc==6.8.5
+tzdata==2026.6
