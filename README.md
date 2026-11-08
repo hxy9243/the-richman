@@ -106,3 +106,5 @@ and runnable [synthetic household scenario](examples/household.json).
 This newer household API settles modeled annual income taxes from checking (and
 retains unpaid tax liability), unlike the standalone legacy strategies described
 above. It still is not a complete current-law California or insurance model.
+
+Custom synthetic policy configuration and nonfatal cash-shortfall/insolvency events are documented in [the household API](docs/lifecycle.md#cash-distress-is-data-not-an-exception).

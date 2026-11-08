@@ -39,7 +39,7 @@ class LifecycleTests(unittest.TestCase):
         self.assertGreater(a.monthly.spending.std(),0)
     def test_shortfall_is_not_hidden(self):
         with self.assertRaisesRegex(ValueError,'cash shortfall'):
-            simulate_household(market(),spending=[Spending('2026-01','2026-12',1)])
+            simulate_household(market(),spending=[Spending('2026-01','2026-12',1)],shortfall_mode='raise')
     def test_policy_loan_does_not_create_equity(self):
         cfg=PolicyConfig('vul',premium_load=0,monthly_admin_fee=0,annual_coi_rate=0,
                          annual_fund_expense=0,annual_loan_rate=0)
@@ -58,7 +58,7 @@ class LifecycleTests(unittest.TestCase):
         self.assertAlmostEqual(r.monthly.iloc[-1].plan_loan_x,0)
     def test_missing_plan_repayment_rejected(self):
         with self.assertRaisesRegex(ValueError,'missed plan-loan'):
-            simulate_household(market(2),accounts={'t':'traditional'},
+            simulate_household(market(2),accounts={'t':'traditional'},shortfall_mode='raise',
               salaries=[Salary('2026-01','2026-01',10000,'t',1,annual_employee_limit=10000)],
               events=[{'month':'2026-01','type':'plan_loan','loan_id':'x','account':'t','amount':2000,
                        'annual_rate':.06,'months':2,'plan_permitted':True,'eligibility_validated':True}],tax_engine=ZERO)
@@ -87,3 +87,75 @@ class PublicApiTests(unittest.TestCase):
         self.assertEqual(len(result.annual),2)
         self.assertEqual(result.metadata['market']['path_type'],'stochastic_gbm')
         self.assertTrue((result.annual.end_net_equity>0).all())
+
+
+class ShortfallEventTests(unittest.TestCase):
+    def test_obligations_and_insolvency_continue(self):
+        r=simulate_household(market(12),initial_cash=50,
+            spending=[Spending('2026-01','2026-12',100)],tax_engine=ZERO)
+        self.assertEqual(len(r.monthly),12)
+        self.assertEqual(r.monthly.checking.min(),0)
+        self.assertEqual(r.annual.iloc[0].unpaid_obligations,1150)
+        self.assertEqual(r.annual.iloc[0].end_net_equity,-1150)
+        self.assertEqual(r.annual.iloc[0].investment_policy_net_change,0)
+        self.assertEqual(len(r.events[r.events.type=='cash_shortfall']),12)
+        self.assertEqual(len(r.events[r.events.type=='balance_sheet_insolvency']),1)
+
+    def test_settle_obligations_does_not_double_count_spending(self):
+        r=simulate_household(market(2),events=[
+            {'month':'2026-01','type':'spend','amount':100},
+            {'month':'2026-02','type':'deposit','amount':150},
+            {'month':'2026-02','type':'settle_obligations','amount':100}],tax_engine=ZERO)
+        self.assertEqual(r.monthly.iloc[-1].checking,50)
+        self.assertEqual(r.annual.iloc[0].unpaid_obligations,0)
+        self.assertEqual(r.annual.iloc[0].end_net_equity,50)
+        self.assertEqual(r.annual.iloc[0].investment_policy_net_change,0)
+
+    def test_unfunded_premium_not_a_new_obligation(self):
+        cfg=PolicyConfig('iul')
+        r=simulate_household(market(2),policies={'custom':{'config':cfg,'symbol':'SPY'}},
+            events=[{'start':'2026-01','end':'2026-02','type':'premium','policy':'custom','amount':100}],tax_engine=ZERO)
+        self.assertEqual(r.annual.iloc[0].unpaid_obligations,0)
+        self.assertEqual(r.annual.iloc[0].end_net_equity,0)
+        self.assertEqual(r.monthly.policy_value_custom.sum(),0)
+
+    def test_partial_premium_and_lapsed_policy_do_not_stop_run(self):
+        cfg=PolicyConfig('vul',premium_load=0,monthly_admin_fee=10,annual_coi_rate=0)
+        r=simulate_household(market(3),initial_cash=5,policies={'v':{'config':cfg,'symbol':'SPY'}},
+            events=[{'start':'2026-01','end':'2026-03','type':'premium','policy':'v','amount':100}],tax_engine=ZERO)
+        self.assertTrue(r.monthly.iloc[0].policy_lapsed_v)
+        self.assertEqual(len(r.events[r.events.type=='policy_event_rejected']),2)
+        self.assertEqual(r.annual.iloc[0].premium,5)
+
+    def test_insufficient_plan_installment_emits_review_not_false_balance(self):
+        r=simulate_household(market(3),accounts={'t':'traditional'},
+            salaries=[Salary('2026-01','2026-01',10000,'t',1,annual_employee_limit=10000)],
+            events=[{'month':'2026-01','type':'plan_loan','loan_id':'x','account':'t','amount':2000,
+                     'annual_rate':.06,'months':2,'plan_permitted':True,'eligibility_validated':True},
+                    {'month':'2026-01','type':'spend','amount':2000},
+                    {'start':'2026-02','end':'2026-03','type':'plan_repay','loan_id':'x'}],tax_engine=ZERO)
+        self.assertEqual(len(r.monthly),3)
+        self.assertIsNone(r.annual.iloc[0].end_net_equity)
+        self.assertTrue(r.monthly.iloc[-1].loan_balance_unresolved)
+        self.assertEqual(len(r.events[r.events.type=='plan_loan_review_required']),1)
+
+    def test_missing_plan_installment_continues(self):
+        r=simulate_household(market(3),accounts={'t':'traditional'},
+            salaries=[Salary('2026-01','2026-01',10000,'t',1,annual_employee_limit=10000)],
+            events=[{'month':'2026-01','type':'plan_loan','loan_id':'x','account':'t','amount':2000,
+                     'annual_rate':.06,'months':2,'plan_permitted':True,'eligibility_validated':True}],tax_engine=ZERO)
+        self.assertEqual(len(r.monthly),3)
+        self.assertEqual(len(r.events[r.events.type=='plan_loan_review_required']),1)
+        self.assertIn('plan-loan',r.annual.iloc[0].tax_status)
+
+    def test_custom_policies_json_api(self):
+        from wealthsim.api import simulate_scenario
+        r=simulate_scenario({'market':{'mode':'historical','rows':market(12).to_dict('records'),
+             'source_name':'synthetic zeros','source_start':'2026-01','months':12,'start':'2026-01'},
+             'initial_cash':3000,'policies':{
+                 'my_iul':{'symbol':'SPY','config':{'kind':'iul','face_amount':100000,'iul_cap':.07}},
+                 'my_vul':{'symbol':'SPY','config':{'kind':'vul','annual_fund_expense':.005}}},
+             'events':[{'month':'2026-01','type':'premium','policy':'my_iul','amount':1000},
+                       {'month':'2026-01','type':'premium','policy':'my_vul','amount':1000}]})
+        self.assertIn('policy_value_my_iul',r.monthly)
+        self.assertIn('policy_value_my_vul',r.monthly)

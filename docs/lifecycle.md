@@ -1,4 +1,4 @@
-# Household lifecycle API v1
+# Household lifecycle API v2
 
 This is a **research API, not production tax/insurance advice**. No UI or HTTP
 server is required. `wealthsim.api.simulate_scenario(dict)` accepts a JSON-friendly
@@ -85,10 +85,13 @@ Only one current loan per account is supported. Earlier repaid loans require
 correct caller-supplied prior-12-month balances; the engine does not infer that
 history. Loan repayment debits checking and credits plan cash, without consuming
 employee contribution room. Plan receivable and matching household liability
-cancel in consolidated equity; **the loan does not create wealth**. Missing a
-scheduled repayment raises an error rather than silently giving an interest-free
-loan. `PlanLoan.mark_default()` / `.mark_job_separation()` flag plan/tax review;
-the household API does not invent deemed-distribution or offset taxation.
+cancel in consolidated equity; **the loan does not create wealth**. Missing or
+unfunded installments emit `plan_loan_review_required`. Further amortization
+freezes, balances are labeled unresolved, and current/future after-tax equity
+is withheld. The household API does not invent cure periods, default interest,
+deemed-distribution or offset taxation. `shortfall_mode="raise"` preserves the
+old fail-fast behavior. `PlanLoan.mark_default()` / `.mark_job_separation()`
+remain lower-level review flags.
 
 ## Tax and reconciliation conventions
 
@@ -123,3 +126,74 @@ wealth in those cases. Unknown liability is never silently represented as zero.
 - Correlated inflation/returns, fat tails, sequence risk and reproducible batches.
 
 No live accounts or trades, and no personal financial data are in this repository.
+
+
+## Custom synthetic insurance policies
+
+Yes: `policies` is an arbitrary name → configuration map, not a fixed menu of
+predefined products. Each policy has independent state and a market symbol.
+For the JSON API:
+
+```json
+"policies": {
+  "custom_iul": {
+    "symbol": "SPY",
+    "config": {
+      "kind": "iul", "face_amount": 250000,
+      "premium_load": 0.05, "monthly_admin_fee": 10,
+      "annual_coi_rate": 0.001, "iul_cap": 0.08,
+      "iul_floor": 0.0, "iul_participation": 1.0,
+      "annual_loan_rate": 0.05, "surrender_charge": 500
+    }
+  },
+  "custom_vul": {
+    "symbol": "SPY",
+    "config": {
+      "kind": "vul", "face_amount": 250000,
+      "premium_load": 0.03, "monthly_admin_fee": 8,
+      "annual_coi_rate": 0.001, "annual_fund_expense": 0.01,
+      "annual_loan_rate": 0.05, "surrender_charge": 500
+    }
+  }
+}
+```
+
+Fund each with `premium` events; vary premiums/loans by month independently of
+configuration. The assumptions are illustrative, not suggested policy terms.
+Rates are constant and COI is proportional to current net amount at risk. This
+cannot express age-dependent COI tables, changing caps/participation, multiple
+index options, changing surrender-charge schedules, carrier guarantees,
+MEC/7702 limits, riders, or true bankruptcy protection. Configuring a new policy
+does not make it a faithful representation of an actual carrier product.
+
+## Cash distress is data, not an exception
+
+`shortfall_mode="event"` is the default. Monthly ledgers continue through cash
+shortages. `cash_shortfall` events report requested, funded and unfunded amounts
+and whether the shortfall creates an obligation.
+
+- Spending pays available checking cash; the unmet amount becomes an explicit
+  `unpaid_obligations` liability, deducted from equity. `spending` means cash
+  paid, while `spending_incurred` includes unmet spending. This assumes requested
+  expenses are obligations, not discretionary purchases canceled for lack of cash.
+- `settle_obligations` pays those liabilities from future cash. Settlement is not
+  new spending and never double-counts the original expense. No interest or late
+  fees accrue unless a future debt module implements them.
+- Premiums, policy repayments and checking-funded investments execute only the
+  funded amount; their unfilled requests do not create arbitrary new debt.
+- A never-funded policy stays inactive. A lapsed policy rejects subsequent
+  policy events with `policy_event_rejected` rather than ending the simulation.
+- Plan-loan installments are all-or-nothing because partial-payment/default rules
+  remain unmodeled. Insufficient cash emits shortfall and loan-review events;
+  the attempted payment does not consume the remaining cash.
+- Annual unpaid tax generates an `unpaid_tax` event and remains tax payable.
+- Negative modeled net equity emits `balance_sheet_insolvency` on each transition
+  into negative equity. It is **not a legal bankruptcy filing or prediction**.
+  Assets may be illiquid even when equity is positive. Unknown taxes and unresolved
+  plan-loan effects are excluded from that preliminary equity label.
+
+Invalid configuration, unsupported distributions, insufficient securities and
+borrowing above contract/plan capacity still raise errors. This change makes
+cashflow distress an output; it does not silently permit invalid transactions.
+The annual accounting bridge uses `spending_incurred`, not only cash spending,
+to reconcile obligations. `end_equity_before_unknown_tax` can be negative.
